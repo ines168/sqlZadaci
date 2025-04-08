@@ -93,3 +93,4 @@ SELECT TOP (1) DatumIzdavanja AS Najstariji FROM Racun WHERE KupacID = 131 ORDER
 SELECT TOP (1) DatumIzdavanja AS Najnoviji FROM Racun WHERE KupacID = 131 ORDER BY DatumIzdavanja DESC
 SELECT MAX(DatumIzdavanja) FROM Racun WHERE KupacID=131
 SELECT MIN(DatumIzdavanja) FROM Racun WHERE KupacID=131
+SELECT MIN(DatumIzdavanja) AS Najstariji, MAX(DatumIzdavanja) AS Najnoviji FROM Racun WHERE KupacID=131
