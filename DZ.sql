@@ -60,7 +60,10 @@ UPDATE Kupac SET GradID=(SELECT IDGrad FROM Grad WHERE Naziv ='Beč') WHERE Ime=
 DELETE FROM Stavka WHERE RacunID=75124 AND ProizvodID=1002
 
 --4. Za sve račune izdane 01.08.2002. i plaćene American Expressom ispisati njihove ID-eve i brojeve te ime i prezime i grad kupca, ime i prezime komercijaliste te broj i podatke o isteku kreditne kartice. Rezultate sortirati prema prezimenu kupca.
-SELECT r.IDRacun, kk.Broj AS BrojKartice, kupac.Ime+' '+kupac.Prezime AS KupacImePrezime, g.Naziv AS KupacGrad, kom.Ime+' '+kom.Prezime AS KomercijalistImePrezime , kk.IstekMjesec, kk.IstekGodina
+SELECT r.IDRacun, kk.Broj AS BrojKartice, kupac.Ime+' '+kupac.Prezime AS KupacImePrezime, g.Naziv AS KupacGrad, 
+kom.Ime+' '+kom.Prezime AS KomercijalistImePrezime , 
+--kk.IstekMjesec, kk.IstekGodina,
+CAST(kk.IstekMjesec AS NVARCHAR(10))+'/'+CAST(kk.IstekGodina AS NVARCHAR(10)) AS IstekKartice
 FROM Racun AS r
 INNER JOIN KreditnaKartica AS kk ON r.KreditnaKarticaID=kk.IDKreditnaKartica 
 INNER JOIN Kupac AS kupac ON kupac.IDKupac=r.KupacID
@@ -80,6 +83,7 @@ SELECT COUNT(IDProizvod) FROM Proizvod WHERE Boja IS NOT NULL
 
 --8. Vratite najvišu cijenu proizvoda.
 SELECT TOP (1) CijenaBezPDV FROM Proizvod ORDER BY CijenaBezPDV DESC
+SELECT MAX(CijenaBezPDV) FROM Proizvod
 
 --9. Vratite prosječnu cijenu proizvoda iz potkategorije 16.
 SELECT AVG(CijenaBezPDV) AS ProsjecnaCijena FROM Proizvod WHERE PotkategorijaID=16
@@ -87,3 +91,5 @@ SELECT AVG(CijenaBezPDV) AS ProsjecnaCijena FROM Proizvod WHERE PotkategorijaID=
 --10.Vratite datume najstarijeg i najnovijeg računa izdanog kupcu 131. 
 SELECT TOP (1) DatumIzdavanja AS Najstariji FROM Racun WHERE KupacID = 131 ORDER BY DatumIzdavanja ASC
 SELECT TOP (1) DatumIzdavanja AS Najnoviji FROM Racun WHERE KupacID = 131 ORDER BY DatumIzdavanja DESC
+SELECT MAX(DatumIzdavanja) FROM Racun WHERE KupacID=131
+SELECT MIN(DatumIzdavanja) FROM Racun WHERE KupacID=131
